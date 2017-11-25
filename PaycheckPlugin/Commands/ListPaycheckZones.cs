@@ -11,7 +11,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		public string Help => "Placeholder"; // TODO
 		public string Syntax => "Placeholder"; // TODO
 		public List<string> Aliases => new List<string> {"lpayzone", "lpayzones", "listpaycheckzone"};
-		public List<string> Permissions => new List<string>();
+		public List<string> Permissions => new List<string> {"paychecks.commands.view"};
 
 		public void Execute(IRocketPlayer caller, string[] command)
 		{
