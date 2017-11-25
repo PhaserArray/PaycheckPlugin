@@ -7,6 +7,7 @@ namespace PhaserArray.AutomaticPaychecks.Serialization
 	{
 		public float Interval;
 		public bool DisplayNotification;
+		public bool AllowPaychecksWhenDead;
 		public bool AllowMultiplePaychecks;
 		public bool OnlyUseClosestZone;
 		public List<Paycheck> Paychecks;
@@ -16,6 +17,7 @@ namespace PhaserArray.AutomaticPaychecks.Serialization
 		{
 			Interval = 10;
 			DisplayNotification = true;
+			AllowPaychecksWhenDead = false;
 			AllowMultiplePaychecks = false;
 			OnlyUseClosestZone = false;
 			Paychecks = new List<Paycheck>

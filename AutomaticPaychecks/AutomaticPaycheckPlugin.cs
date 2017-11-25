@@ -51,8 +51,9 @@ namespace PhaserArray.AutomaticPaychecks
 		    var paychecks = GetAvailablePaychecks(player);
 		    var experience = GetPaycheckExperience(player, paychecks);
 		    var multiplier = GetPaycheckMultiplier(player.Position, paychecks);
-			
-		    if (Mathf.Abs(multiplier) > 0.0001f)
+
+			// TODO: Add check for AllowPaychecksWhenDead
+			if (Mathf.Abs(multiplier) > 0.0001f)
 			{
 			    var experienceGiven = ChangeExperience(player, (int)(experience * multiplier));
 			    if (experienceGiven != 0 && Config.DisplayNotification)
@@ -137,7 +138,7 @@ namespace PhaserArray.AutomaticPaychecks
 				    var distance = (position - zone.Point.GetValueOrDefault()).sqrMagnitude;
 				    if (!(distance <= Mathf.Pow(zone.Radius, 2f))) continue;
 
-				    if (Config.AllowMultiplePaychecks)
+				    if (!Config.OnlyUseClosestZone)
 				    {
 					    multiplier *= zone.Multiplier;
 				    }
@@ -157,10 +158,10 @@ namespace PhaserArray.AutomaticPaychecks
 					    var distance = (position - node.point).sqrMagnitude;
 					    if (!(distance <= Mathf.Pow(zone.Radius, 2f))) continue;
 
-					    if (Config.AllowMultiplePaychecks)
-					    {
-							zones.Add(zone);
-					    }
+						if (!Config.OnlyUseClosestZone)
+						{
+							multiplier *= zone.Multiplier;
+						}
 					    else if (distance < closestDistance)
 						{
 							closestDistance = distance;
