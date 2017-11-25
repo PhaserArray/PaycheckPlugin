@@ -9,7 +9,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 	{
 		public AllowedCaller AllowedCaller => AllowedCaller.Both;
 		public string Name => "listpaychecks";
-		public string Help => "Lists all paychecks";
+		public string Help => "Lists all paychecks"; // TODO
 		public string Syntax => "";
 		public List<string> Aliases => new List<string> {"lpay", "lpays", "listpaycheck"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.view"};

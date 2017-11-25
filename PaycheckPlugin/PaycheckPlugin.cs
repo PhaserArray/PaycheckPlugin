@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using PhaserArray.PaycheckPlugin.Serialization;
-using PhaserArray.PaycheckPlugin.Helpers;
+using Rocket.API;
 using Rocket.API.Collections;
 using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
 using UnityEngine;
-using Logger = Rocket.Core.Logging.Logger;
 
 namespace PhaserArray.PaycheckPlugin
 {
@@ -57,7 +55,7 @@ namespace PhaserArray.PaycheckPlugin
 			// TODO: Add check for AllowPaychecksWhenDead
 			if (Mathf.Abs(multiplier) > 0.0001f)
 			{
-			    var experienceGiven = ExperienceHelper.ChangeExperience(player, (int)(experience * multiplier));
+			    var experienceGiven = ChangeExperience(player, (int)(experience * multiplier));
 			    if (experienceGiven != 0 && Config.DisplayNotification)
 			    {
 				    UnturnedChat.Say(player, Translate("paycheck_given", experienceGiven));
@@ -71,6 +69,19 @@ namespace PhaserArray.PaycheckPlugin
 				}
 		    }
 	    }
+
+		/// <summary>
+		/// Changes the player's experience, attempts to avoid overflow.
+		/// </summary>
+		/// <param name="player"></param>
+		/// <param name="change"></param>
+		/// <returns>Actual Change</returns>
+	    public int ChangeExperience(UnturnedPlayer player, int change)
+		{
+			var exp = player.Experience + change;
+			player.Experience = exp < uint.MinValue ? uint.MinValue : exp > uint.MaxValue ? uint.MaxValue : (uint)exp;
+			return (int)(change + player.Experience - exp);
+		}
 
 		/// <summary>
 		/// Gets the experience sum for all provided paychecks.
@@ -90,8 +101,7 @@ namespace PhaserArray.PaycheckPlugin
 		/// <returns>List of Paychecks</returns>
 	    public List<Paycheck> GetAvailablePaychecks(UnturnedPlayer player)
 	    {
-			var paychecks = Config.Paychecks.Where(paycheck => 
-				PermissionsHelper.HasPermission(player, "paycheck." + paycheck.Name.ToLower())).ToList();
+		    var paychecks = Config.Paychecks.Where(paycheck => player.HasPermission("paycheck." + paycheck.Name.ToLower())).ToList();
 
 		    if (Config.AllowMultiplePaychecks || paychecks.Count <= 1) return paychecks;
 
@@ -114,18 +124,11 @@ namespace PhaserArray.PaycheckPlugin
 		/// <returns>Paycheck Experience Multiplier</returns>
 	    public float GetPaycheckMultiplier(Vector3 position, List<Paycheck> paychecks)
 	    {
-			Logger.Log("begin");
 		    var zones = new List<PaycheckZone>();
-			Logger.Log("initzones");
-		    zones.AddRange(Config.PaycheckZones);
-		    Logger.Log("addeddefaultzones");
-		    foreach (var paycheck in paychecks)
-		    {
-			    zones.AddRange(paycheck.PaycheckZones);
-		    }
-		    Logger.Log("addedpaycheckspecificzones");
+		    zones = (List<PaycheckZone>)zones.Concat(Config.PaycheckZones);
+		    zones = paychecks.Aggregate(zones, (current, paycheck) => (List<PaycheckZone>) current.Concat(paycheck.PaycheckZones));
 
-			var multiplier = 1f;
+		    var multiplier = 1f;
 		    var closestDistance = Mathf.Infinity;
 
 		    foreach (var zone in zones)
@@ -168,8 +171,6 @@ namespace PhaserArray.PaycheckPlugin
 				    }
 			    }
 		    }
-
-		    Logger.Log(multiplier.ToString(CultureInfo.InvariantCulture));
 
 		    return multiplier;
 	    }
