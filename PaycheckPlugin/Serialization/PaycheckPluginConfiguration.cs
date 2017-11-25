@@ -2,9 +2,9 @@
 using Rocket.API;
 using UnityEngine;
 
-namespace PhaserArray.AutomaticPaychecks.Serialization
+namespace PhaserArray.PaycheckPlugin.Serialization
 {
-	public class AutomaticPaycheckConfiguration : IRocketPluginConfiguration
+	public class PaycheckPluginConfiguration : IRocketPluginConfiguration
 	{
 		public float Interval;
 		public bool DisplayNotification;

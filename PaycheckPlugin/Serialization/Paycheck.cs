@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PhaserArray.AutomaticPaychecks.Serialization
+namespace PhaserArray.PaycheckPlugin.Serialization
 {
 	public class Paycheck
 	{

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticPaychecks", "AutomaticPaychecks\AutomaticPaychecks.csproj", "{8E20D829-D21E-4362-8B93-A74782CF60FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaycheckPlugin", "PaycheckPlugin\PaycheckPlugin.csproj", "{8E20D829-D21E-4362-8B93-A74782CF60FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

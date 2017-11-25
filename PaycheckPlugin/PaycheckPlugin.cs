@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using PhaserArray.AutomaticPaychecks.Serialization;
+using PhaserArray.PaycheckPlugin.Serialization;
 using Rocket.API;
 using Rocket.API.Collections;
 using Rocket.Core.Plugins;
@@ -9,12 +9,12 @@ using Rocket.Unturned.Player;
 using SDG.Unturned;
 using UnityEngine;
 
-namespace PhaserArray.AutomaticPaychecks
+namespace PhaserArray.PaycheckPlugin
 {
-    public class AutomaticPaycheckPlugin: RocketPlugin<AutomaticPaycheckConfiguration>
+    public class PaycheckPlugin: RocketPlugin<PaycheckPluginConfiguration>
     {
-	    public static AutomaticPaycheckPlugin Instance;
-	    public static AutomaticPaycheckConfiguration Config;
+	    public static PaycheckPlugin Instance;
+	    public static PaycheckPluginConfiguration Config;
 
 	    protected override void Load()
 	    {

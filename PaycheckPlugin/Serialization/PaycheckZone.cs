@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PhaserArray.AutomaticPaychecks.Serialization
+namespace PhaserArray.PaycheckPlugin.Serialization
 {
 	public class PaycheckZone
 	{

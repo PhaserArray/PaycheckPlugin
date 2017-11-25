@@ -7,8 +7,8 @@
     <ProjectGuid>{8E20D829-D21E-4362-8B93-A74782CF60FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhaserArray.AutomaticPaychecks</RootNamespace>
-    <AssemblyName>AutomaticPaychecks</AssemblyName>
+    <RootNamespace>PhaserArray.PaycheckPlugin</RootNamespace>
+    <AssemblyName>PaycheckPlugin</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -62,14 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutomaticPaycheckPlugin.cs" />
+    <Compile Include="PaycheckPlugin.cs" />
     <Compile Include="Commands\CreatePaycheck.cs" />
     <Compile Include="Commands\CreatePaycheckZone.cs" />
     <Compile Include="Commands\DeletePaycheck.cs" />
     <Compile Include="Commands\DeletePaycheckZone.cs" />
     <Compile Include="Commands\ListPaychecks.cs" />
     <Compile Include="Commands\ListPaycheckZones.cs" />
-    <Compile Include="Serialization\AutomaticPaycheckConfiguration.cs" />
+    <Compile Include="Serialization\PaycheckPluginConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Paycheck.cs" />
     <Compile Include="Serialization\PaycheckZone.cs" />
