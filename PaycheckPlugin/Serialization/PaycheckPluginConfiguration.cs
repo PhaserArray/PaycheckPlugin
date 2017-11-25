@@ -8,9 +8,10 @@ namespace PhaserArray.PaycheckPlugin.Serialization
 	{
 		public float Interval;
 		public bool DisplayNotification;
+		public bool AllowMultipleMultipliers;
 		public bool AllowPaychecksWhenDead;
+		public bool AllowPaychecksInSafezone;
 		public bool AllowMultiplePaychecks;
-		public bool OnlyUseClosestZone;
 		public List<Paycheck> Paychecks;
 		public List<PaycheckZone> PaycheckZones;
 
@@ -18,9 +19,10 @@ namespace PhaserArray.PaycheckPlugin.Serialization
 		{
 			Interval = 10;
 			DisplayNotification = true;
+			AllowMultipleMultipliers = true;
 			AllowPaychecksWhenDead = false;
+			AllowPaychecksInSafezone = false;
 			AllowMultiplePaychecks = false;
-			OnlyUseClosestZone = false;
 			Paychecks = new List<Paycheck>
 			{
 				new Paycheck("default", 100)

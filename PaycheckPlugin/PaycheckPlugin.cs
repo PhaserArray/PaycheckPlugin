@@ -27,7 +27,7 @@ namespace PhaserArray.PaycheckPlugin
 
 	    protected override void Unload()
 	    {
-			// TODO: Implement commands to make making paychecks easier so saving this has a point.
+			// TODO: Implement commands to make making paychecks easier so saving this has a point. Also, test the saving to make sure it actually works.
 			Configuration.Save();
 			CancelInvoke(nameof(GiveAllPaychecks));
 	    }
@@ -50,26 +50,41 @@ namespace PhaserArray.PaycheckPlugin
 		/// <param name="player"></param>
 	    public void GivePaycheck(UnturnedPlayer player)
 	    {
-		    var paychecks = GetAvailablePaychecks(player);
+		    if (!Config.AllowPaychecksWhenDead && player.Dead)
+		    {
+			    if (!Config.DisplayNotification) return;
+				UnturnedChat.Say(player, Translate("paycheck_dead"));
+			    return;
+			}
+		    if (!Config.AllowPaychecksInSafezone && player.Player.movement.isSafe)
+		    {
+			    if (!Config.DisplayNotification) return;
+			    UnturnedChat.Say(player, Translate("paycheck_safezone"));
+			    return;
+		    }
+			var paychecks = GetAvailablePaychecks(player);
 		    var experience = GetPaycheckExperience(player, paychecks);
 		    var multiplier = GetPaycheckMultiplier(player.Position, paychecks);
-
-			// TODO: Add check for AllowPaychecksWhenDead
+			
 			if (Mathf.Abs(multiplier) > 0.0001f)
 			{
-			    var experienceGiven = ExperienceHelper.ChangeExperience(player, (int)(experience * multiplier));
-			    if (experienceGiven != 0 && Config.DisplayNotification)
-			    {
-				    UnturnedChat.Say(player, Translate("paycheck_given", experienceGiven));
-			    }
-		    }
-		    else
-		    {
-			    if (Config.DisplayNotification)
+				var change = (int) (experience * multiplier);
+				var experienceGiven = ExperienceHelper.ChangeExperience(player, change);
+				if (!Config.DisplayNotification) return;
+				if (experienceGiven != 0)
 				{
-					UnturnedChat.Say(player, Translate("paycheck_zero_multiplier"));
+					UnturnedChat.Say(player, Translate("paycheck_given", experienceGiven));
 				}
-		    }
+				else if (change != 0)
+				{
+					UnturnedChat.Say(player, Translate("paycheck_notgiven", change));
+				}
+			}
+		    else
+			{
+				if (!Config.DisplayNotification) return;
+				UnturnedChat.Say(player, Translate("paycheck_zero_multiplier"));
+			}
 	    }
 
 		/// <summary>
@@ -114,16 +129,12 @@ namespace PhaserArray.PaycheckPlugin
 		/// <returns>Paycheck Experience Multiplier</returns>
 	    public float GetPaycheckMultiplier(Vector3 position, List<Paycheck> paychecks)
 	    {
-			Logger.Log("begin");
 		    var zones = new List<PaycheckZone>();
-			Logger.Log("initzones");
 		    zones.AddRange(Config.PaycheckZones);
-		    Logger.Log("addeddefaultzones");
 		    foreach (var paycheck in paychecks)
 		    {
 			    zones.AddRange(paycheck.PaycheckZones);
 		    }
-		    Logger.Log("addedpaycheckspecificzones");
 
 			var multiplier = 1f;
 		    var closestDistance = Mathf.Infinity;
@@ -135,7 +146,7 @@ namespace PhaserArray.PaycheckPlugin
 				    var distance = (position - zone.Point.GetValueOrDefault()).sqrMagnitude;
 				    if (!(distance <= Mathf.Pow(zone.Radius, 2f))) continue;
 
-				    if (!Config.OnlyUseClosestZone)
+				    if (Config.AllowMultipleMultipliers)
 				    {
 					    multiplier *= zone.Multiplier;
 				    }
@@ -155,7 +166,7 @@ namespace PhaserArray.PaycheckPlugin
 					    var distance = (position - node.point).sqrMagnitude;
 					    if (!(distance <= Mathf.Pow(zone.Radius, 2f))) continue;
 
-						if (!Config.OnlyUseClosestZone)
+						if (Config.AllowMultipleMultipliers)
 						{
 							multiplier *= zone.Multiplier;
 						}
@@ -177,7 +188,10 @@ namespace PhaserArray.PaycheckPlugin
 	    public override TranslationList DefaultTranslations => new TranslationList()
 	    {
 		    {"paycheck_zero_multiplier", "You cannot earn experience in this area!"},
-		    {"paycheck_given", "You have received your paycheck of {0} experience!"}
-	    };
+		    {"paycheck_given", "You have received your paycheck of {0} experience!"},
+		    {"paycheck_notgiven", "Your paycheck was {0}, but you were unable to receive it!"},
+		    {"paycheck_dead", "You cannot receive paychecks while dead!"},
+		    {"paycheck_safezone", "You cannot receive paychecks in a safezone!"}
+		};
     }
 }
