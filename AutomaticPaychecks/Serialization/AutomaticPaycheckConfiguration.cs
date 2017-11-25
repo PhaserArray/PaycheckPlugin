@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Rocket.API;
+using UnityEngine;
 
 namespace PhaserArray.AutomaticPaychecks.Serialization
 {
@@ -22,11 +23,12 @@ namespace PhaserArray.AutomaticPaychecks.Serialization
 			OnlyUseClosestZone = false;
 			Paychecks = new List<Paycheck>
 			{
-				new Paycheck("default", 500)
+				new Paycheck("default", 100)
 			};
 			PaycheckZones = new List<PaycheckZone>
 			{
-				new PaycheckZone(" HQ", 400f, 0f)
+				new PaycheckZone(" HQ", 400f, 0f),
+				new PaycheckZone(new Vector3(1f,2f,3f), 200f, 1.2f)
 			};
 		}
 	}

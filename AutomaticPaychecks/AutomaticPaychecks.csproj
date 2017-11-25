@@ -32,18 +32,23 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Rocket.API">
       <HintPath>D:\Downloads\Chrome\Rocket\Modules\Rocket.Unturned\Rocket.API.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Rocket.Core">
       <HintPath>D:\Downloads\Chrome\Rocket\Modules\Rocket.Unturned\Rocket.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Rocket.Unturned">
       <HintPath>D:\Downloads\Chrome\Rocket\Modules\Rocket.Unturned\Rocket.Unturned.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,17 +58,22 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutomaticPaycheckPlugin.cs" />
+    <Compile Include="Commands\CreatePaycheck.cs" />
+    <Compile Include="Commands\CreatePaycheckZone.cs" />
+    <Compile Include="Commands\DeletePaycheck.cs" />
+    <Compile Include="Commands\DeletePaycheckZone.cs" />
+    <Compile Include="Commands\ListPaychecks.cs" />
+    <Compile Include="Commands\ListPaycheckZones.cs" />
     <Compile Include="Serialization\AutomaticPaycheckConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\Paycheck.cs" />
     <Compile Include="Serialization\PaycheckZone.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
