@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using PhaserArray.PaycheckPlugin.Serialization;
 using PhaserArray.PaycheckPlugin.Helpers;
@@ -13,13 +12,15 @@ using Logger = Rocket.Core.Logging.Logger;
 
 namespace PhaserArray.PaycheckPlugin
 {
-    public class PaycheckPlugin: RocketPlugin<PaycheckPluginConfiguration>
+    public class PaycheckPlugin : RocketPlugin<PaycheckPluginConfiguration>
     {
 	    public static PaycheckPlugin Instance;
 	    public static PaycheckPluginConfiguration Config;
+		public const string Version = "v0.1";
 
 	    protected override void Load()
 	    {
+			Logger.Log($"Loading PhaserArray's Paycheck Plugin {Version}");
 		    Instance = this;
 		    Config = Configuration.Instance;
 			InvokeRepeating(nameof(GiveAllPaychecks), Config.Interval, Config.Interval);
@@ -27,8 +28,10 @@ namespace PhaserArray.PaycheckPlugin
 
 	    protected override void Unload()
 	    {
-			// TODO: Implement commands to make making paychecks easier so saving this has a point. Also, test the saving to make sure it actually works.
-			Configuration.Save();
+			if (Config.IsDirty)
+			{
+				Configuration.Save();
+			}
 			CancelInvoke(nameof(GiveAllPaychecks));
 	    }
 
@@ -179,13 +182,10 @@ namespace PhaserArray.PaycheckPlugin
 				    }
 			    }
 		    }
-
-		    Logger.Log(multiplier.ToString(CultureInfo.InvariantCulture));
-
 		    return multiplier;
 	    }
 
-	    public override TranslationList DefaultTranslations => new TranslationList()
+	    public override TranslationList DefaultTranslations => new TranslationList
 	    {
 		    {"paycheck_zero_multiplier", "You cannot earn experience in this area!"},
 		    {"paycheck_given", "You have received your paycheck of {0} experience!"},
