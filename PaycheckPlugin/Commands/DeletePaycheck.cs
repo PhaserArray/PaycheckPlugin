@@ -28,6 +28,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 							PaycheckPlugin.Config.Paychecks[paycheckIndex.Value].Name), 
 						Color.magenta);
 					PaycheckPlugin.Config.Paychecks.RemoveAt(paycheckIndex.Value);
+					PaycheckPlugin.Config.IsDirty = true;
 					return;
 				}
 				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found", command[0]), Palette.COLOR_Y);

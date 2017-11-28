@@ -19,7 +19,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		{
 			if (PaycheckPlugin.Config.Paychecks.Count == 0)
 			{
-				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_paychecks"), Color.yellow);
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found"), Color.yellow);
 				return;
 			}
 
