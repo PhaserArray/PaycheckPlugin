@@ -205,8 +205,15 @@ namespace PhaserArray.PaycheckPlugin
 		    {"command_invalid_out_of_bounds", "Index {0} is out of bounds {1} to {2}!"},
 		    {"command_removed_zone_default", "Removed zone at {0} from global zones!"},
 		    {"command_removed_zone_paycheck", "Removed zone at {1} from paycheck \"{0}\"!"},
-		    {"command_no_parse_int", "Could not parse \"{0}\" as an integer!"},
-		    {"command_paycheck_created", "Created paycheck named \"{0}\" with {1}XP, players with \"paycheck.{0}\" permissions will have access to it!"}
+		    {"command_no_parse_experience", "Could not parse \"{0}\" as the experience!"},
+		    {"command_paycheck_created", "Created paycheck named \"{0}\" with {1}XP, players with \"paycheck.{0}\" permissions will have access to it!"},
+		    {"command_no_console", "This command cannot be called from the console in this way!"},
+		    {"command_no_parse_multiplier", "Could not parse \"{0}\" as the multiplier!"},
+		    {"command_no_parse_radius", "Could not parse \"{0}\" as the radius!"},
+		    {"command_no_parse_location", "Could not parse \"{0}\" as coordinates or a node!"},
+		    {"command_created_zone_default", "Created a global zone at {0} with a multiplier of {1} and radius of {2}!"},
+		    {"command_created_zone_paycheck", "Created a zone for \"{0}\" at {1} with a multiplier of {2} and radius of {3}!"},
+		    {"command_no_parse_paycheck_or_location", "Could not parse \"{0}\" as a paycheck, coordinates or a node!"}
 		};
     }
 }

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ExperienceHelper.cs" />
+    <Compile Include="Helpers\NodeHelper.cs" />
     <Compile Include="Helpers\PaycheckHelper.cs" />
     <Compile Include="Helpers\PermissionsHelper.cs" />
     <Compile Include="Helpers\Vector3Helper.cs" />

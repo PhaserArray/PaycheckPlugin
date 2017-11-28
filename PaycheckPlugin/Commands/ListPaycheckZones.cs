@@ -48,7 +48,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 			var zonesString = new StringBuilder();
 			for (var i = 0; i < zones.Count; i++)
 			{
-				zonesString.AppendFormat(" [{0}] - {1}x {2},", i + 1, zones[i].Multiplier, ZoneHelper.GetLocationString(zones[i]));
+				zonesString.AppendFormat(" [{0}] - {1}x {2} {3}m,", i + 1, zones[i].Multiplier, ZoneHelper.GetLocationString(zones[i]), zones[i].Radius);
 			}
 			zonesString.Remove(zonesString.Length - 1, 1);
 			UnturnedChat.Say(caller,

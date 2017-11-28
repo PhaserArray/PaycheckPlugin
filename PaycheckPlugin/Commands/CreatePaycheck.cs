@@ -27,7 +27,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 
 			if (!int.TryParse(command[1], out var experience))
 			{
-				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_parse_int", command[1]), Color.yellow);
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_parse_experience", command[1]), Color.yellow);
 				return;
 			}
 
