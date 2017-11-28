@@ -16,14 +16,20 @@ namespace PhaserArray.PaycheckPlugin.Commands
 
 		public void Execute(IRocketPlayer caller, string[] command)
 		{
-			var response = new StringBuilder();
-			response.Append("Current paychecks: ");
+			if (PaycheckPlugin.Config.Paychecks.Count == 0)
+			{
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_paychecks"));
+				return;
+			}
+
+			var paychecksString = new StringBuilder();
+			paychecksString.Append(" ");
 			foreach (var paycheck in PaycheckPlugin.Config.Paychecks)
 			{
-				response.AppendFormat(" {0}({1}),", paycheck.Name, paycheck.Experience);
+				paychecksString.AppendFormat(" {0}({1}),", paycheck.Name, paycheck.Experience);
 			}
-			response.Remove(response.Length - 1, 1);
-			UnturnedChat.Say(caller, response.ToString());
+			paychecksString.Remove(paychecksString.Length - 1, 1);
+			UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_list_paychecks", paychecksString.ToString()));
 		}
 	}
 }

@@ -191,7 +191,13 @@ namespace PhaserArray.PaycheckPlugin
 		    {"paycheck_given", "You have received your paycheck of {0} experience!"},
 		    {"paycheck_notgiven", "Your paycheck was {0}, but you were unable to receive it!"},
 		    {"paycheck_dead", "You cannot receive paychecks while dead!"},
-		    {"paycheck_safezone", "You cannot receive paychecks in a safezone!"}
+		    {"paycheck_safezone", "You cannot receive paychecks in a safezone!"},
+		    {"paycheck_command_not_found", "Paycheck \"{0}\" could not be found!"},
+		    {"paycheck_command_list_paychecks", "Current paychecks:{0}"},
+		    {"command_default_no_zones", "There are no default zones set up!"},
+		    {"command_paycheck_no_zones", "{0} has no zones set up!"},
+		    {"command_list_default_zones", "Default paycheck zones:{0}"},
+		    {"command_list_paycheck_zones", "Paycheck {0}'s paycheck zones:{1}"}
 		};
     }
 }
