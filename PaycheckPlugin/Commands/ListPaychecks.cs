@@ -27,7 +27,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 			paychecksString.Append(" ");
 			foreach (var paycheck in PaycheckPlugin.Config.Paychecks)
 			{
-				paychecksString.AppendFormat(" {0}({1}),", paycheck.Name, paycheck.Experience);
+				paychecksString.AppendFormat(" {0} ({1}XP),", paycheck.Name, paycheck.Experience);
 			}
 			paychecksString.Remove(paychecksString.Length - 1, 1);
 			UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_list_paychecks", paychecksString.ToString()));
