@@ -1,6 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PhaserArray.PaycheckPlugin.Helpers;
 using Rocket.API;
+using Rocket.Unturned.Chat;
+using SDG.Unturned;
+using UnityEngine;
 
 namespace PhaserArray.PaycheckPlugin.Commands
 {
@@ -8,14 +11,29 @@ namespace PhaserArray.PaycheckPlugin.Commands
 	{
 		public AllowedCaller AllowedCaller => AllowedCaller.Both;
 		public string Name => "deletepaycheck";
-		public string Help => "Placeholder"; // TODO
-		public string Syntax => "Placeholder"; // TODO
+		public string Help => "Deletes a paycheck with the given name"; // TODO
+		public string Syntax => "[paycheck]"; // TODO
 		public List<string> Aliases => new List<string> {"dpay"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.manage"};
 
 		public void Execute(IRocketPlayer caller, string[] command)
 		{
-			throw new NotImplementedException();
+			if (command.Length > 0)
+			{
+				var paycheckIndex = PaycheckHelper.FindBestMatchIndex(command[0]);
+				if (paycheckIndex != null)
+				{
+					UnturnedChat.Say(caller, 
+						PaycheckPlugin.Instance.Translate("command_paycheck_deleted", 
+							PaycheckPlugin.Config.Paychecks[paycheckIndex.Value].Name), 
+						Color.magenta);
+					PaycheckPlugin.Config.Paychecks.RemoveAt(paycheckIndex.Value);
+					return;
+				}
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found", command[0]), Palette.COLOR_Y);
+				return;
+			}
+			UnturnedChat.Say(caller, $"Use /{Name} {Syntax}");
 		}
 	}
 }
