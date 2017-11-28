@@ -2,7 +2,7 @@
 using System.Text;
 using Rocket.API;
 using Rocket.Unturned.Chat;
-using SDG.Unturned;
+using UnityEngine;
 
 namespace PhaserArray.PaycheckPlugin.Commands
 {
@@ -19,7 +19,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		{
 			if (PaycheckPlugin.Config.Paychecks.Count == 0)
 			{
-				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_paychecks"), Palette.COLOR_Y);
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_paychecks"), Color.yellow);
 				return;
 			}
 

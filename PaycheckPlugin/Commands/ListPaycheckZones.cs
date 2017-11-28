@@ -27,7 +27,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				paycheck = PaycheckHelper.FindBestMatch(command[0]);
 				if (paycheck == null)
 				{
-					UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found", command[0]), Palette.COLOR_Y);
+					UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found", command[0]), Color.yellow);
 					return;
 				}
 				zones = paycheck.PaycheckZones;
@@ -42,7 +42,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				UnturnedChat.Say(caller,
 					command.Length == 0
 						? PaycheckPlugin.Instance.Translate("command_default_no_zones")
-						: PaycheckPlugin.Instance.Translate("command_paycheck_no_zones", paycheck?.Name), Palette.COLOR_Y);
+						: PaycheckPlugin.Instance.Translate("command_paycheck_no_zones", paycheck?.Name), Color.yellow);
 				return;
 			}
 
