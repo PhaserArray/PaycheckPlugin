@@ -4,7 +4,6 @@ using PhaserArray.PaycheckPlugin.Helpers;
 using PhaserArray.PaycheckPlugin.Serialization;
 using Rocket.API;
 using Rocket.Unturned.Chat;
-using SDG.Unturned;
 using UnityEngine;
 
 namespace PhaserArray.PaycheckPlugin.Commands
@@ -15,7 +14,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		public string Name => "listpaycheckzones";
 		public string Help => "Lists all zones for the provided paycheck, lists global zones if paycheck is not provided."; // TODO
 		public string Syntax => "<paycheck>"; // TODO
-		public List<string> Aliases => new List<string> {"lpayzone", "lpayzones", "listpaycheckzone"};
+		public List<string> Aliases => new List<string> {"lpayzone", "lpayzones", "listpaycheckzone", "lpayz"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.view"};
 
 		public void Execute(IRocketPlayer caller, string[] command)
@@ -47,25 +46,15 @@ namespace PhaserArray.PaycheckPlugin.Commands
 			}
 
 			var zonesString = new StringBuilder();
-			zonesString.Append(" ");
 			for (var i = 0; i < zones.Count; i++)
 			{
-				if (zones[i].Point != null)
-				{
-					var vector = zones[i].Point.Value;
-					var vectorString = $"({Mathf.Round(vector.x)},{Mathf.Round(vector.y)},{Mathf.Round(vector.z)})";
-					zonesString.AppendFormat(" [{0}] - {1},", i + 1, vectorString);
-				}
-				else if (zones[i].Node != null)
-				{
-					zonesString.AppendFormat(" [{0}] - {1},", i + 1, zones[i].Node);
-				}
+				zonesString.AppendFormat(" [{0}] - {1},", i + 1, ZoneHelper.GetLocationString(zones[i]));
 			}
 			zonesString.Remove(zonesString.Length - 1, 1);
 			UnturnedChat.Say(caller,
 				command.Length == 0
 					? PaycheckPlugin.Instance.Translate("command_list_default_zones", zonesString.ToString())
-					: PaycheckPlugin.Instance.Translate("command_list_paycheck_zones", paycheck?.Name, zonesString.ToString()));
+					: PaycheckPlugin.Instance.Translate("command_list_paycheck_zones", paycheck?.Name, zonesString.ToString()), Color.green);
 		}
 	}
 }

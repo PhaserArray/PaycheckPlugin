@@ -2,7 +2,6 @@
 using PhaserArray.PaycheckPlugin.Helpers;
 using Rocket.API;
 using Rocket.Unturned.Chat;
-using SDG.Unturned;
 using UnityEngine;
 
 namespace PhaserArray.PaycheckPlugin.Commands
@@ -18,7 +17,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 
 		public void Execute(IRocketPlayer caller, string[] command)
 		{
-			if (command.Length > 0)
+			if (command.Length == 1)
 			{
 				var paycheckIndex = PaycheckHelper.FindBestMatchIndex(command[0]);
 				if (paycheckIndex != null)
@@ -31,10 +30,10 @@ namespace PhaserArray.PaycheckPlugin.Commands
 					PaycheckPlugin.Config.IsDirty = true;
 					return;
 				}
-				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found", command[0]), Palette.COLOR_Y);
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found", command[0]), Color.yellow);
 				return;
 			}
-			UnturnedChat.Say(caller, $"Use /{Name} {Syntax}");
+			UnturnedChat.Say(caller, $"Use /{Name} {Syntax}", Color.yellow);
 		}
 	}
 }

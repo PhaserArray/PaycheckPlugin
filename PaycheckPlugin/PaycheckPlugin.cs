@@ -23,17 +23,18 @@ namespace PhaserArray.PaycheckPlugin
 			Logger.Log($"Loading PhaserArray's Paycheck Plugin {Version}");
 		    Instance = this;
 		    Config = Configuration.Instance;
+
 			InvokeRepeating(nameof(GiveAllPaychecks), Config.Interval, Config.Interval);
 	    }
 
-	    protected override void Unload()
-	    {
+		protected override void Unload()
+		{
 			if (Config.IsDirty)
 			{
 				Configuration.Save();
 			}
 			CancelInvoke(nameof(GiveAllPaychecks));
-	    }
+		}
 
 		/// <summary>
 		/// Gives all players paychecks.
@@ -76,7 +77,7 @@ namespace PhaserArray.PaycheckPlugin
 				if (!Config.DisplayNotification) return;
 				if (experienceGiven != 0)
 				{
-					UnturnedChat.Say(player, Translate("paycheck_given", experienceGiven));
+					UnturnedChat.Say(player, Translate("paycheck_given", experienceGiven), Color.green);
 				}
 				else if (change != 0)
 				{
@@ -194,10 +195,16 @@ namespace PhaserArray.PaycheckPlugin
 		    {"paycheck_safezone", "You cannot receive paychecks in a safezone!"},
 		    {"command_paycheck_not_found", "Paycheck \"{0}\" could not be found!"},
 		    {"command_list_paychecks", "Current paychecks:{0}"},
-		    {"command_default_no_zones", "There are no default zones set up!"},
-		    {"command_paycheck_no_zones", "{0} has no zones set up!"},
+		    {"command_no_paychecks", "There are no paychecks set up!"},
+			{"command_default_no_zones", "There are no default zones set up!"},
+		    {"command_paycheck_no_zones", "\"{0}\" has no zones set up!"},
 		    {"command_list_default_zones", "Default paycheck zones:{0}"},
-		    {"command_list_paycheck_zones", "Paycheck {0}'s paycheck zones:{1}"}
+		    {"command_list_paycheck_zones", "Paycheck \"{0}\" paycheck zones:{1}"},
+		    {"command_paycheck_deleted", "Paycheck \"{0}\" has been deleted!"},
+		    {"command_delete_zone_no_parse", "Could not find zone!"},
+		    {"command_invalid_out_of_bounds", "Index {0} is out of bounds {1} to {2}!"},
+		    {"command_removed_zone_default", "Removed zone at {0} from global zones!"},
+		    {"command_removed_zone_paycheck", "Removed zone at {1} from paycheck \"{0}\"!"}
 		};
     }
 }

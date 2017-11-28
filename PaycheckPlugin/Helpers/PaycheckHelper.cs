@@ -22,7 +22,6 @@ namespace PhaserArray.PaycheckPlugin.Helpers
 		/// </summary>
 		/// <param name="search"></param>
 		/// <returns>Paycheck Index</returns>
-		[CanBeNull]
 		public static int? FindBestMatchIndex(string search)
 		{
 			search = search.ToLower();
@@ -49,7 +48,9 @@ namespace PhaserArray.PaycheckPlugin.Helpers
 
 				if (!paycheck.Name.ToLower().Contains(search)) continue;
 
-				var matchPercentage = search.Length / paycheck.Name.Length;
+				if (paycheck.Name.Length == search.Length) return i;
+
+				var matchPercentage = (float)search.Length / paycheck.Name.Length;
 				if (!(matchPercentage > bestMatchPercentage)) continue;
 				bestMatchPercentage = matchPercentage;
 				bestMatch = i;

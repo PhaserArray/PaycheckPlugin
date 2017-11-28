@@ -19,18 +19,17 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		{
 			if (PaycheckPlugin.Config.Paychecks.Count == 0)
 			{
-				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_not_found"), Color.yellow);
+				UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_no_paychecks"), Color.yellow);
 				return;
 			}
 
 			var paychecksString = new StringBuilder();
-			paychecksString.Append(" ");
 			foreach (var paycheck in PaycheckPlugin.Config.Paychecks)
 			{
 				paychecksString.AppendFormat(" {0} ({1}XP),", paycheck.Name, paycheck.Experience);
 			}
 			paychecksString.Remove(paychecksString.Length - 1, 1);
-			UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_list_paychecks", paychecksString.ToString()));
+			UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_list_paychecks", paychecksString.ToString()), Color.green);
 		}
 	}
 }
