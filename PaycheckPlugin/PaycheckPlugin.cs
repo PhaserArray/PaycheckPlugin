@@ -56,13 +56,13 @@ namespace PhaserArray.PaycheckPlugin
 		    if (!Config.AllowPaychecksWhenDead && player.Dead)
 		    {
 			    if (!Config.DisplayNotification) return;
-				UnturnedChat.Say(player, Translate("paycheck_dead"));
+				UnturnedChat.Say(player, Translate("paycheck_dead"), Color.yellow);
 			    return;
 			}
 		    if (!Config.AllowPaychecksInSafezone && player.Player.movement.isSafe)
 		    {
 			    if (!Config.DisplayNotification) return;
-			    UnturnedChat.Say(player, Translate("paycheck_safezone"));
+			    UnturnedChat.Say(player, Translate("paycheck_safezone"), Color.yellow);
 			    return;
 		    }
 			var paychecks = GetAvailablePaychecks(player);
@@ -80,13 +80,13 @@ namespace PhaserArray.PaycheckPlugin
 				}
 				else if (change != 0)
 				{
-					UnturnedChat.Say(player, Translate("paycheck_notgiven", change));
+					UnturnedChat.Say(player, Translate("paycheck_notgiven", change), Color.yellow);
 				}
 			}
 		    else
 			{
 				if (!Config.DisplayNotification) return;
-				UnturnedChat.Say(player, Translate("paycheck_zero_multiplier"));
+				UnturnedChat.Say(player, Translate("paycheck_zero_multiplier"), Color.yellow);
 			}
 	    }
 
