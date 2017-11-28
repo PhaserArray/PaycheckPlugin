@@ -10,22 +10,19 @@ namespace PhaserArray.PaycheckPlugin.Commands
 	{
 		public AllowedCaller AllowedCaller => AllowedCaller.Both;
 		public string Name => "deletepaycheckzone";
-		public string Help => "Placeholder"; // TODO
-		public string Syntax => "<paycheck> [index | node | (x,y,z)]"; // TODO
+		public string Help => "Placeholder";
+		public string Syntax => "<paycheck> [index | node | (x,y,z)]";
 		public List<string> Aliases => new List<string> {"dpayzone", "dpayz"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.manage"};
 		
 		public void Execute(IRocketPlayer caller, string[] command)
 		{
-			#region UsageCheck
 			if (command.Length != 1 && command.Length != 2)
 			{
 				UnturnedChat.Say(caller, $"Use /{Name} {Syntax}", Color.yellow);
 				return;
 			}
-			#endregion
-			
-			#region GetPaycheckIndex
+
 			var paycheckIndex = 0;
 			var zones = PaycheckPlugin.Config.PaycheckZones;
 			if (command.Length == 2)
@@ -39,7 +36,6 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				paycheckIndex = paycheck.Value;
 				zones = PaycheckPlugin.Config.Paychecks[paycheckIndex].PaycheckZones;
 			}
-			#endregion
 
 			if (zones.Count == 0)
 			{
@@ -50,7 +46,6 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				return;
 			}
 
-			#region GetZoneIndex
 			if (!int.TryParse(command[command.Length - 1], out var index))
 			{
 				var bestMatchIndex = ZoneHelper.FindBestMatchIndex(zones, command[command.Length - 1]);
@@ -73,9 +68,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 					return;
 				}
 			}
-			#endregion
 
-			#region RemoveZone
 			// ReSharper disable once ConvertIfStatementToSwitchStatement
 			if (command.Length == 1)
 			{
@@ -95,7 +88,6 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				PaycheckPlugin.Config.Paychecks[paycheckIndex].PaycheckZones.RemoveAt(index);
 			}
 			PaycheckPlugin.Config.IsDirty = true;
-			#endregion
 		}
 	}
 }
