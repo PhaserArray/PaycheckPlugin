@@ -12,7 +12,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		public string Name => "listpaychecks";
 		public string Help => "Lists all paychecks";
 		public string Syntax => "";
-		public List<string> Aliases => new List<string> {"lpay", "lpays", "listpaycheck"};
+		public List<string> Aliases => new List<string> {"lpay"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.view"};
 
 		public void Execute(IRocketPlayer caller, string[] command)

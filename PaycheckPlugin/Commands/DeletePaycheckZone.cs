@@ -12,7 +12,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		public string Name => "deletepaycheckzone";
 		public string Help => "Placeholder";
 		public string Syntax => "<paycheck> [index | node | (x,y,z)]";
-		public List<string> Aliases => new List<string> {"dpayzone", "dpayz"};
+		public List<string> Aliases => new List<string> {"dpayz"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.manage"};
 		
 		public void Execute(IRocketPlayer caller, string[] command)

@@ -14,7 +14,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		public string Name => "listpaycheckzones";
 		public string Help => "Lists all zones for the provided paycheck, lists global zones if paycheck is not provided."; // TODO
 		public string Syntax => "<paycheck>"; // TODO
-		public List<string> Aliases => new List<string> {"lpayzone", "lpayzones", "listpaycheckzone", "lpayz"};
+		public List<string> Aliases => new List<string> {"lpayz"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.view"};
 
 		public void Execute(IRocketPlayer caller, string[] command)

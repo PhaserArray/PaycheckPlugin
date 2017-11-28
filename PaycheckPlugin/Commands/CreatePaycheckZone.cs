@@ -10,7 +10,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 		public string Name => "createpaycheckzone";
 		public string Help => "Placeholder"; // TODO
 		public string Syntax => "Placeholder"; // TODO
-		public List<string> Aliases => new List<string> {"cpayzone", "cpayz"};
+		public List<string> Aliases => new List<string> {"cpayz"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.manage"};
 
 		public void Execute(IRocketPlayer caller, string[] command)
