@@ -21,7 +21,7 @@ namespace PhaserArray.PaycheckPlugin.Serialization
 
 		public void LoadDefaults()
 		{
-			Interval = 10;
+			Interval = 600f;
 			DisplayNotification = true;
 			AllowMultipleMultipliers = true;
 			AllowPaychecksWhenDead = false;
@@ -29,12 +29,24 @@ namespace PhaserArray.PaycheckPlugin.Serialization
 			AllowMultiplePaychecks = false;
 			Paychecks = new List<Paycheck>
 			{
-				new Paycheck("default", 100)
+				new Paycheck("pvt", 100),
+				new Paycheck("pfc", 150),
+				new Paycheck("cpl", 200),
+				new Paycheck("sgt", 250),
+				new Paycheck("ssgt", 300),
+				new Paycheck("1sgt", 350),
+				new Paycheck("msgt", 400),
+				new Paycheck("2lt", 500),
+				new Paycheck("1lt", 600),
+				new Paycheck("cpt", 700),
+				new Paycheck("maj", 1200),
+				new Paycheck("ltc", 1700),
+				new Paycheck("col", 2200),
+				new Paycheck("bg", 2700)
 			};
 			PaycheckZones = new List<PaycheckZone>
 			{
-				new PaycheckZone(" HQ", 400f, 0f),
-				new PaycheckZone(new Vector3(1f,2f,3f), 200f, 1.2f)
+				new PaycheckZone(" HQ", 270f, 0.5f)
 			};
 		}
 	}
