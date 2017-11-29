@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PhaserArray.PaycheckPlugin.Helpers;
 using PhaserArray.PaycheckPlugin.Serialization;
 using Rocket.API;

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PhaserArray.PaycheckPlugin.Helpers;
 using PhaserArray.PaycheckPlugin.Serialization;
 using Rocket.API;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using UnityEngine;
-using Logger = Rocket.Core.Logging.Logger;
 
 namespace PhaserArray.PaycheckPlugin.Commands
 {

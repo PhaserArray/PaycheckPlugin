@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using Rocket.API;
-using UnityEngine;
 
 namespace PhaserArray.PaycheckPlugin.Serialization
 {
