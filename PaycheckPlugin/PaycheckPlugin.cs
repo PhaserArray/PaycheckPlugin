@@ -16,7 +16,7 @@ namespace PhaserArray.PaycheckPlugin
     {
 	    public static PaycheckPlugin Instance;
 	    public static PaycheckPluginConfiguration Config;
-		public const string Version = "v0.1";
+		public const string Version = "v1.0";
 
 	    protected override void Load()
 	    {
@@ -29,8 +29,10 @@ namespace PhaserArray.PaycheckPlugin
 
 		protected override void Unload()
 		{
+			Logger.Log($"Unloading PhaserArray's Paycheck Plugin {Version}");
 			if (Config.IsDirty)
 			{
+				Logger.Log("Configuration has been changed in-game, saving!");
 				Configuration.Save();
 			}
 			CancelInvoke(nameof(GiveAllPaychecks));
@@ -53,8 +55,13 @@ namespace PhaserArray.PaycheckPlugin
 		/// </summary>
 		/// <param name="player"></param>
 	    public void GivePaycheck(UnturnedPlayer player)
-	    {
-		    if (!Config.AllowPaychecksWhenDead && player.Dead)
+		{
+			var paychecks = GetAvailablePaychecks(player);
+			if (paychecks.Count == 0)
+			{
+				return;
+			}
+			if (!Config.AllowPaychecksWhenDead && player.Dead)
 		    {
 			    if (!Config.DisplayNotification) return;
 				UnturnedChat.Say(player, Translate("paycheck_dead"), Color.yellow);
@@ -66,7 +73,6 @@ namespace PhaserArray.PaycheckPlugin
 			    UnturnedChat.Say(player, Translate("paycheck_safezone"), Color.yellow);
 			    return;
 		    }
-			var paychecks = GetAvailablePaychecks(player);
 		    var experience = GetPaycheckExperience(player, paychecks);
 		    var multiplier = GetPaycheckMultiplier(player.Position, paychecks);
 			

@@ -49,7 +49,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 			var paycheck = new Paycheck(command[0].ToLower(), experience, zones);
 			PaycheckPlugin.Config.Paychecks.Add(paycheck);
 			PaycheckPlugin.Config.IsDirty = true;
-			UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_created", paycheck.Name, paycheck.Experience), Color.magenta);
+			UnturnedChat.Say(caller, PaycheckPlugin.Instance.Translate("command_paycheck_created", paycheck.Name, paycheck.Experience), Color.cyan);
 		}
 	}
 }

@@ -39,6 +39,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				return;
 			}
 
+			// ReSharper disable once ConvertIfStatementToSwitchStatement
 			if (command.Length == 2)
 			{
 				if (caller.Id == "Console")
@@ -53,7 +54,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 						ZoneHelper.GetLocationString(zone),
 						zone.Multiplier+"x",
 						zone.Radius), 
-					Color.yellow);
+					Color.cyan);
 			}
 			else if (command.Length == 3)
 			{
@@ -73,21 +74,21 @@ namespace PhaserArray.PaycheckPlugin.Commands
 							ZoneHelper.GetLocationString(zone),
 							zone.Multiplier + "x",
 							zone.Radius),
-						Color.yellow);
+						Color.cyan);
 				}
 				else
 				{
 					var pointResult = Vector3Helper.Parse(command[0]);
 					if (pointResult != null)
 					{
-						var zone = new PaycheckZone(pointResult.Value, radius, multiplier);
+						var zone = new PaycheckZone(Vector3Helper.Round(pointResult.Value), radius, multiplier);
 						PaycheckPlugin.Config.PaycheckZones.Add(zone);
 						UnturnedChat.Say(caller,
 							PaycheckPlugin.Instance.Translate("command_created_zone_default",
 								ZoneHelper.GetLocationString(zone),
 								zone.Multiplier + "x",
 								zone.Radius),
-							Color.yellow);
+							Color.cyan);
 					}
 					else if (NodeHelper.Exists(command[0]))
 					{
@@ -98,7 +99,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 								ZoneHelper.GetLocationString(zone),
 								zone.Multiplier + "x",
 								zone.Radius),
-							Color.yellow);
+							Color.cyan);
 					}
 					else
 					{
@@ -118,7 +119,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 				var pointResult = Vector3Helper.Parse(command[1]);
 				if (pointResult != null)
 				{
-					var zone = new PaycheckZone(pointResult.Value, radius, multiplier);
+					var zone = new PaycheckZone(Vector3Helper.Round(pointResult.Value), radius, multiplier);
 					PaycheckPlugin.Config.Paychecks[paycheckIndex.Value].PaycheckZones.Add(zone);
 					UnturnedChat.Say(caller,
 						PaycheckPlugin.Instance.Translate("command_created_zone_paycheck",
@@ -126,7 +127,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 							ZoneHelper.GetLocationString(zone),
 							zone.Multiplier + "x",
 							zone.Radius),
-						Color.yellow);
+						Color.cyan);
 				}
 				else if (NodeHelper.Exists(command[1]))
 				{
@@ -138,7 +139,7 @@ namespace PhaserArray.PaycheckPlugin.Commands
 							ZoneHelper.GetLocationString(zone),
 							zone.Multiplier + "x",
 							zone.Radius),
-						Color.yellow);
+						Color.cyan);
 				}
 				else
 				{
