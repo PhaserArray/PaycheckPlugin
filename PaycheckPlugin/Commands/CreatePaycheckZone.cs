@@ -12,8 +12,8 @@ namespace PhaserArray.PaycheckPlugin.Commands
 	{
 		public AllowedCaller AllowedCaller => AllowedCaller.Both;
 		public string Name => "createpaycheckzone";
-		public string Help => "Placeholder"; // TODO
-		public string Syntax => "<paycheck> <node | x,y,z> [radius] [multiplier]"; // TODO
+		public string Help => "Placeholder";
+		public string Syntax => "<paycheck> <node | x,y,z> [radius] [multiplier]";
 		public List<string> Aliases => new List<string> {"cpayz"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.manage"};
 

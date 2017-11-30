@@ -10,8 +10,8 @@ namespace PhaserArray.PaycheckPlugin.Commands
 	{
 		public AllowedCaller AllowedCaller => AllowedCaller.Both;
 		public string Name => "deletepaycheck";
-		public string Help => "Deletes a paycheck with the given name"; // TODO
-		public string Syntax => "[paycheck]"; // TODO
+		public string Help => "Deletes a paycheck with the given name";
+		public string Syntax => "[paycheck]";
 		public List<string> Aliases => new List<string> {"dpay"};
 		public List<string> Permissions => new List<string> {"paychecks.commands.manage"};
 

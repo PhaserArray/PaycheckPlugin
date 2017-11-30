@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\NextPaycheck.cs" />
     <Compile Include="Helpers\ExperienceHelper.cs" />
     <Compile Include="Helpers\NodeHelper.cs" />
     <Compile Include="Helpers\PaycheckHelper.cs" />

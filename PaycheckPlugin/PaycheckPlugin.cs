@@ -20,9 +20,9 @@ namespace PhaserArray.PaycheckPlugin
 	    public static PaycheckPluginConfiguration Config;
 		public const string Version = "v1.0";
 
-	    private static float _nextPaycheck;
+	    private float _nextPaycheck;
 
-	    public static float SecondsToNextPaycheck => _nextPaycheck - Time.realtimeSinceStartup;
+	    public float SecondsToNextPaycheck => _nextPaycheck - Time.realtimeSinceStartup;
 
 	    protected override void Load()
 	    {
@@ -246,7 +246,9 @@ namespace PhaserArray.PaycheckPlugin
 		    {"command_no_parse_location", "Could not parse \"{0}\" as coordinates or a node!"},
 		    {"command_created_zone_default", "Created a global zone at {0} with a multiplier of {1} and radius of {2}!"},
 		    {"command_created_zone_paycheck", "Created a zone for \"{0}\" at {1} with a multiplier of {2} and radius of {3}!"},
-		    {"command_no_parse_paycheck_or_location", "Could not parse \"{0}\" as a paycheck, coordinates or a node!"}
+		    {"command_no_parse_paycheck_or_location", "Could not parse \"{0}\" as a paycheck, coordinates or a node!"},
+		    {"command_time_to_next_paycheck_minutes", "You will receive your next paycheck in {0} minutes, {1} seconds!"},
+		    {"command_time_to_next_paycheck", "You will receive your next paycheck in {0} seconds!"}
 		};
     }
 }
