@@ -9,6 +9,11 @@ An unturned rocket plugin that adds the ability to give players different amount
 **Paycheck Name Note:** Paycheck names are case insensitive. A partial name is also acceptable. It will always return the match where the search string makes up the highest percentage of the paycheck name (for example: searching for paycheck `a` in a list of `apple,a124,paycheckname` will always return `a124`.  
 **Node Name Note:** THe name can be a partial match, but it is case sensitive.  
 
+**Name:** `nextpaycheck`   
+**Alias:** `npay`  
+**Permission:** `paychecks.commands.view`  
+**Description:** Shows the amount of time until the next paycheck is given out.
+
 **Name:** `createpaycheck`  
 **Usage:** `[name] [experience] <paychecktocopyzonesfrom>`  
 **Alias:** `cpay`  
@@ -49,7 +54,7 @@ An unturned rocket plugin that adds the ability to give players different amount
 ### Configuration
 
 #### Settings
-`Interval` - How often the paychecks are distributed. Do not set this too low in order to avoid any potential lag.
+`Interval` - How often the paychecks are distributed. This must be >0, also, do not set this too low in order to avoid any potential lag.  
 `DisplayNotification` - Whether a message should be sent to the player when they get or fail to get their paycheck.  
 `AllowMultipleMultipliers` - Whether multipliers should be multiplied together if a player is in multiple zones at once. If false, only the closest multiplier will be used.  
 `AllowPaychecksWhenDead` - Whether a player can receive paychecks while dead. It is a good idea to keep this as false for AFK protection.  
@@ -104,3 +109,5 @@ Paychecks consist of 3 components.
 `command_created_zone_default` - String shown when a global zone is created. {0} is the location, {1} is the radius and {2} is the multiplier.  
 `command_created_zone_paycheck` - String shown when a paycheck zone is created. {0} is the paycheck name, {1} is the location, {2} is the radius and {3} is the multiplier.  
 `command_no_parse_paycheck_or_location` - String shown when a parameter could not be parsed as either a paycheck, node or coordinates. {0} is the input.  
+`command_time_to_next_paycheck_minutes` - String shown when a player checks the amount of time until the next paycheck and there are more than 60 seconds left. {0} is the minutes left and {1} is the seconds left.  
+`command_time_to_next_paycheck` - String shown when a player checks the amount of time until the next paycheck and there are les than 60 seconds left. {0} is the seconds left.
