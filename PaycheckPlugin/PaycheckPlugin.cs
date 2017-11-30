@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using PhaserArray.PaycheckPlugin.Serialization;
 using PhaserArray.PaycheckPlugin.Helpers;
+using Rocket.API;
 using Rocket.API.Collections;
 using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
@@ -18,13 +20,16 @@ namespace PhaserArray.PaycheckPlugin
 	    public static PaycheckPluginConfiguration Config;
 		public const string Version = "v1.0";
 
+	    private static float _nextPaycheck;
+
+	    public static float SecondsToNextPaycheck => _nextPaycheck - Time.realtimeSinceStartup;
+
 	    protected override void Load()
 	    {
 			Logger.Log($"Loading PhaserArray's Paycheck Plugin {Version}");
 		    Instance = this;
 		    Config = Configuration.Instance;
-
-			InvokeRepeating(nameof(GiveAllPaychecks), Config.Interval, Config.Interval);
+		    StartCoroutine(PaycheckGiver(Config.Interval));
 	    }
 
 		protected override void Unload()
@@ -35,7 +40,21 @@ namespace PhaserArray.PaycheckPlugin
 				Logger.Log("Configuration has been changed in-game, saving!");
 				Configuration.Save();
 			}
-			CancelInvoke(nameof(GiveAllPaychecks));
+			StopCoroutine(PaycheckGiver(Config.Interval));
+		}
+
+		/// <summary>
+		/// Repeats the paycheck giving process every interval.
+		/// </summary>
+		/// <param name="interval">int</param>
+	    private IEnumerator PaycheckGiver(float interval)
+		{
+			do
+			{
+				_nextPaycheck = Time.realtimeSinceStartup + interval;
+				yield return new WaitForSecondsRealtime(interval);
+				GiveAllPaychecks();
+			} while (State == PluginState.Loaded);
 		}
 
 		/// <summary>
@@ -43,12 +62,12 @@ namespace PhaserArray.PaycheckPlugin
 		/// </summary>
 	    public void GiveAllPaychecks()
 	    {
-		    if (!Provider.isInitialized || !Level.isLoaded) return;
+			if (!Provider.isInitialized || !Level.isLoaded) return;
 		    foreach (var client in Provider.clients)
 		    {
 			    GivePaycheck(UnturnedPlayer.FromSteamPlayer(client));
-		    }
-	    }
+			}
+		}
 
 		/// <summary>
 		/// Gives the player their paycheck(s) w/ multipliers applied, also send paycheck notifications.
@@ -62,15 +81,13 @@ namespace PhaserArray.PaycheckPlugin
 				return;
 			}
 			if (!Config.AllowPaychecksWhenDead && player.Dead)
-		    {
-			    if (!Config.DisplayNotification) return;
-				UnturnedChat.Say(player, Translate("paycheck_dead"), Color.yellow);
+			{
+				ShowNotification(player, Translate("paycheck_dead"), Color.yellow);
 			    return;
 			}
 		    if (!Config.AllowPaychecksInSafezone && player.Player.movement.isSafe)
-		    {
-			    if (!Config.DisplayNotification) return;
-			    UnturnedChat.Say(player, Translate("paycheck_safezone"), Color.yellow);
+			{
+				ShowNotification(player, Translate("paycheck_safezone"), Color.yellow);
 			    return;
 		    }
 		    var experience = GetPaycheckExperience(player, paychecks);
@@ -80,22 +97,32 @@ namespace PhaserArray.PaycheckPlugin
 			{
 				var change = (int) (experience * multiplier);
 				var experienceGiven = ExperienceHelper.ChangeExperience(player, change);
-				if (!Config.DisplayNotification) return;
 				if (experienceGiven != 0)
 				{
-					UnturnedChat.Say(player, Translate("paycheck_given", experienceGiven), Color.green);
+					ShowNotification(player, Translate("paycheck_given", experienceGiven), Color.green);
 				}
 				else if (change != 0)
 				{
-					UnturnedChat.Say(player, Translate("paycheck_notgiven", change), Color.yellow);
+					ShowNotification(player, Translate("paycheck_notgiven", change), Color.yellow);
 				}
 			}
 		    else
 			{
-				if (!Config.DisplayNotification) return;
-				UnturnedChat.Say(player, Translate("paycheck_zero_multiplier"), Color.yellow);
+				ShowNotification(player, Translate("paycheck_zero_multiplier"), Color.yellow);
 			}
 	    }
+
+		/// <summary>
+		/// Sends the player a notification if DisplayNotification is true.
+		/// </summary>
+		/// <param name="player"></param>
+		/// <param name="message"></param>
+		/// <param name="color"></param>
+	    public void ShowNotification(IRocketPlayer player, string message, Color color)
+		{
+			if (!Config.DisplayNotification) return;
+			UnturnedChat.Say(player, message, color);
+		}
 
 		/// <summary>
 		/// Gets the experience sum for all provided paychecks.
