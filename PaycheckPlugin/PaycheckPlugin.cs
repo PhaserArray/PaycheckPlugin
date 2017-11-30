@@ -18,7 +18,7 @@ namespace PhaserArray.PaycheckPlugin
     {
 	    public static PaycheckPlugin Instance;
 	    public static PaycheckPluginConfiguration Config;
-		public const string Version = "v1.0";
+		public const string Version = "v1.1";
 
 	    private float _nextPaycheck;
 
