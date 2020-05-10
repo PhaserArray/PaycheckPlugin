@@ -110,7 +110,7 @@ namespace PhaserArray.PaycheckPlugin
 			    return;
 		    }
 
-			var experience = GetPaycheckExperience(player, paychecks);
+			var experience = GetPaycheckExperienceSum(paychecks);
 		    var multiplier = GetPaycheckMultiplier(player.Position, paychecks);
 			
 			if (Mathf.Abs(multiplier) > 0.0001f)
@@ -147,10 +147,9 @@ namespace PhaserArray.PaycheckPlugin
 		/// <summary>
 		/// Gets the experience sum for all provided paychecks.
 		/// </summary>
-		/// <param name="player"></param>
 		/// <param name="paychecks"></param>
 		/// <returns>Sum</returns>
-		public int GetPaycheckExperience(UnturnedPlayer player, List<Paycheck> paychecks)
+		public int GetPaycheckExperienceSum(List<Paycheck> paychecks)
 		{
 			return paychecks.Sum(paycheck => paycheck.Experience);
 	    }
