@@ -60,6 +60,7 @@ An unturned rocket plugin that adds the ability to give players different amount
 `AllowPaychecksWhenDead` - Whether a player can receive paychecks while dead. It is a good idea to keep this as false for AFK protection.  
 `AllowPaychecksInSafezone` - Whether a player can receive paychecks while in a safezone. It is a good idea to keep this as false for AFK protection.  
 `AllowMultiplePaychecks` - Whether a player can receive multiple paychecks. If true, they will be added together, if false, only the player's highest paycheck will be given out.  
+`MinimumMovementBetweenPaychecks` - The distance a player has to move from their previous position to get their next paycheck. Set to 0 to disable.  
 `Paychecks` - List of paychecks.
 `PaycheckZones` - List of global zones, these are applied to all paychecks.
 
