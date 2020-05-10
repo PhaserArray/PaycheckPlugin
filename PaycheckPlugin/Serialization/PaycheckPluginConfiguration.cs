@@ -12,6 +12,7 @@ namespace PhaserArray.PaycheckPlugin.Serialization
 		public bool AllowPaychecksWhenDead;
 		public bool AllowPaychecksInSafezone;
 		public bool AllowMultiplePaychecks;
+		public float MinimumMovementBetweenPaychecks;
 		public List<Paycheck> Paychecks;
 		public List<PaycheckZone> PaycheckZones;
 
@@ -23,9 +24,10 @@ namespace PhaserArray.PaycheckPlugin.Serialization
 			Interval = 600f;
 			DisplayNotification = true;
 			AllowMultipleMultipliers = true;
-			AllowPaychecksWhenDead = false;
+			AllowPaychecksWhenDead = true;
 			AllowPaychecksInSafezone = false;
 			AllowMultiplePaychecks = false;
+			MinimumMovementBetweenPaychecks = 1.0f;
 			Paychecks = new List<Paycheck>
 			{
 				new Paycheck("pvt", 100),

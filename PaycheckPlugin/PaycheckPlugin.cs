@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using PhaserArray.PaycheckPlugin.Serialization;
 using PhaserArray.PaycheckPlugin.Helpers;
@@ -9,6 +10,7 @@ using Rocket.Core.Plugins;
 using Rocket.Unturned.Chat;
 using Rocket.Unturned.Player;
 using SDG.Unturned;
+using Steamworks;
 using UnityEngine;
 using Logger = Rocket.Core.Logging.Logger;
 
@@ -18,9 +20,10 @@ namespace PhaserArray.PaycheckPlugin
     {
 	    public static PaycheckPlugin Instance;
 	    public static PaycheckPluginConfiguration Config;
-		public const string Version = "v1.1";
+		public const string Version = "v1.2";
 
 	    private float _nextPaycheck;
+	    private Dictionary<CSteamID, Vector3> _playerPositions;
 
 	    public float SecondsToNextPaycheck => _nextPaycheck - Time.realtimeSinceStartup;
 
@@ -29,6 +32,7 @@ namespace PhaserArray.PaycheckPlugin
 			Logger.Log($"Loading PhaserArray's Paycheck Plugin {Version}");
 		    Instance = this;
 		    Config = Configuration.Instance;
+			_playerPositions = new Dictionary<CSteamID, Vector3>();
 		    StartCoroutine(PaycheckGiver(Config.Interval));
 	    }
 
@@ -90,7 +94,23 @@ namespace PhaserArray.PaycheckPlugin
 				ShowNotification(player, Translate("paycheck_safezone"), Color.yellow);
 			    return;
 		    }
-		    var experience = GetPaycheckExperience(player, paychecks);
+		    if (Config.MinimumMovementBetweenPaychecks > 0.0f)
+		    {
+			    if (_playerPositions.ContainsKey(player.CSteamID))
+			    {
+				    var distance = (player.Position - _playerPositions[player.CSteamID]).sqrMagnitude;
+				    _playerPositions[player.CSteamID] = player.Position;
+					if (distance <= Mathf.Pow(Config.MinimumMovementBetweenPaychecks, 2))
+					{
+						return;
+				    }
+				}
+			    _playerPositions[player.CSteamID] = player.Position;
+				ShowNotification(player, Translate("paycheck_stationary"), Color.yellow);
+			    return;
+		    }
+
+			var experience = GetPaycheckExperience(player, paychecks);
 		    var multiplier = GetPaycheckMultiplier(player.Position, paychecks);
 			
 			if (Mathf.Abs(multiplier) > 0.0001f)
@@ -226,7 +246,8 @@ namespace PhaserArray.PaycheckPlugin
 		    {"paycheck_notgiven", "Your paycheck was {0}, but you were unable to receive it!"},
 		    {"paycheck_dead", "You cannot receive paychecks while dead!"},
 		    {"paycheck_safezone", "You cannot receive paychecks in a safezone!"},
-		    {"command_paycheck_not_found", "Paycheck \"{0}\" could not be found!"},
+		    {"paycheck_stationary", "You cannot receive paychecks if you haven't moved from where you were at the last payout!"},
+			{"command_paycheck_not_found", "Paycheck \"{0}\" could not be found!"},
 		    {"command_list_paychecks", "Current paychecks:{0}"},
 		    {"command_no_paychecks", "There are no paychecks set up!"},
 			{"command_default_no_zones", "There are no global zones set up!"},
