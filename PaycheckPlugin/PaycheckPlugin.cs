@@ -20,7 +20,7 @@ namespace PhaserArray.PaycheckPlugin
     {
 	    public static PaycheckPlugin Instance;
 	    public static PaycheckPluginConfiguration Config;
-		public const string Version = "v1.2";
+		public const string Version = "v1.3";
 
 	    private float _nextPaycheck;
 	    private Dictionary<CSteamID, Vector3> _playerPositions;
@@ -99,15 +99,13 @@ namespace PhaserArray.PaycheckPlugin
 			    if (_playerPositions.ContainsKey(player.CSteamID))
 			    {
 				    var distance = (player.Position - _playerPositions[player.CSteamID]).sqrMagnitude;
-				    _playerPositions[player.CSteamID] = player.Position;
 					if (distance <= Mathf.Pow(Config.MinimumMovementBetweenPaychecks, 2))
 					{
+						ShowNotification(player, Translate("paycheck_stationary"), Color.yellow);
 						return;
 				    }
 				}
 			    _playerPositions[player.CSteamID] = player.Position;
-				ShowNotification(player, Translate("paycheck_stationary"), Color.yellow);
-			    return;
 		    }
 
 			var experience = GetPaycheckExperienceSum(paychecks);
